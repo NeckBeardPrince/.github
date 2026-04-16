@@ -1,0 +1,71 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "assignees": ["NeckBeardPrince"],
+  "reviewers": ["copilot"],
+  "timezone": "America/Chicago",
+  "schedule": ["after 9am every weekend"],
+  "minimumReleaseAge": "7 days",
+  "prConcurrentLimit": 3,
+  "branchConcurrentLimit": 5,
+  "stopUpdatingLabel": "stop-updates",
+  "rebaseWhen": "behind-base-branch",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "({{currentVersion}} → {{newVersion}})",
+  "prTitle": "⬆️ {{commitMessageTopic}}{{{commitMessageExtra}}}",
+  "fetchReleaseNotes": true,
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "🤖 Dependency Dashboard",
+  "labels": ["dependencies"],
+  "vulnerabilityAlerts": {
+    "labels": ["type:security"],
+    "minimumReleaseAge": null
+  },
+  "packageRules": [
+    { "matchCategories": ["python"], "addLabels": ["python"] },
+    { "matchCategories": ["golang"], "addLabels": ["go"] },
+    { "matchCategories": ["docker"], "addLabels": ["docker"] },
+    { "matchCategories": ["github-actions"], "addLabels": ["github-actions"] },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["at any time"],
+      "automerge": true,
+      "addLabels": ["dev-deps"]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["major-update", "needs-review"],
+      "prPriority": 10,
+      "minimumReleaseAge": "14 days",
+      "automerge": false
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "automerge": true
+    },
+    {
+      "matchCategories": ["golang"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"],
+      "groupName": "golang",
+      "automerge": true
+    },
+    {
+      "matchCategories": ["python"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"],
+      "groupName": "python",
+      "automerge": true
+    },
+    {
+      "matchCategories": ["docker"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"],
+      "groupName": "docker",
+      "pinDigests": true,
+      "automerge": true
+    }
+  ]
+}
